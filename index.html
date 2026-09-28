@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coldlapse</title>
+  <meta name="description" content="Coldlapse의 포트폴리오. beatmania.app, PixelZoom, IIDXwidget, 그리고 이것들이 올라가는 홈 서버 Polygon.">
+  <meta name="theme-color" content="#eef1f5" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0d1326" media="(prefers-color-scheme: dark)">
+  <meta property="og:title" content="Coldlapse">
+  <meta property="og:description" content="beatmania.app · PixelZoom · IIDXwidget · Polygon home server">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://coldlapse.dev/">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+KR:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    (function () {
+      try {
+        var t = localStorage.getItem("theme");
+        if (t === "light" || t === "dark") document.documentElement.setAttribute("data-theme", t);
+        var l = localStorage.getItem("lang");
+        if (!l) l = (navigator.language || "ko").toLowerCase().indexOf("ko") === 0 ? "ko" : "en";
+        document.documentElement.setAttribute("lang", l === "en" ? "en" : "ko");
+      } catch (e) {}
+    })();
+  </script>
+</head>
+<body>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="spark" viewBox="0 0 32 32"><path fill="currentColor" d="M16 0C17 11 21 15 32 16 21 17 17 21 16 32 15 21 11 17 0 16 11 15 15 11 16 0Z"/></symbol></svg>
+  <header class="top">
+    <div class="wrap">
+      <a class="name" href="#">Coldlapse</a>
+      <nav aria-label="Sections">
+        <a href="#work" data-t="nav.work"></a>
+        <a href="#polygon" data-t="nav.polygon"></a>
+        <a href="#more" data-t="nav.more"></a>
+        <a href="#papers" data-t="nav.papers"></a>
+      </nav>
+      <div class="toggles">
+        <button type="button" id="lang-ko">KO</button>
+        <button type="button" id="lang-en">EN</button>
+        <button type="button" id="theme" aria-label="Toggle theme"></button>
+      </div>
+    </div>
+  </header>
+
+  <div class="hero">
+    <canvas id="weather" aria-hidden="true"></canvas>
+    <div class="wrap hero-grid">
+      <div>
+        <div class="songbar">
+          <span class="songlamp" aria-hidden="true"></span>
+          <div class="songtext">
+            <p class="genre">PORTFOLIO · 2017–2026</p>
+            <h1><svg class="spark s1" aria-hidden="true"><use href="#spark"/></svg>Coldlapse<svg class="spark s2" aria-hidden="true"><use href="#spark"/></svg></h1>
+            <p class="artist" data-t="hero.artist"></p>
+          </div>
+          <div class="level">
+            <span class="diff">JUNIOR</span>
+            <span class="role">Backend &amp; Infra</span>
+            <span class="diff sub">ENGINEER</span>
+          </div>
+        </div>
+        <p class="lede" data-t="hero.lede"></p>
+      </div>
+      <dl class="facts" id="facts"></dl>
+    </div>
+  </div>
+
+  <main>
+    <div class="glance-strip"><div class="wrap"><ul id="glance"></ul></div></div>
+
+    <section id="work"><div class="wrap">
+      <h2 data-t="h.work"></h2>
+      <div class="legend" id="legend"></div>
+      <div id="cases"></div>
+    </div></section>
+
+    <section id="polygon"><div class="wrap">
+      <h2 data-t="h.polygon"></h2>
+      <div id="polygon-body"></div>
+    </div></section>
+
+    <section id="more"><div class="wrap">
+      <h2 data-t="h.more"></h2>
+      <div class="songs" id="songs"></div>
+    </div></section>
+
+    <section id="freelance"><div class="wrap">
+      <h2 data-t="h.freelance"></h2>
+      <p class="lead-line" id="freelance-body"></p>
+    </div></section>
+
+    <section id="papers"><div class="wrap">
+      <h2 data-t="h.papers"></h2>
+      <ul class="plain" id="paper-list"></ul>
+    </div></section>
+
+    <section id="stack"><div class="wrap">
+      <h2 data-t="h.stack"></h2>
+      <ul class="plain" id="stack-list"></ul>
+    </div></section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>Coldlapse · <a href="mailto:vegarian@dgu.ac.kr">vegarian@dgu.ac.kr</a></span>
+      <span data-t="footer"></span>
+    </div>
+  </footer>
+
+  <script src="assets/js/data.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
