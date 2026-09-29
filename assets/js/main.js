@@ -7,6 +7,15 @@
 
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
   function fill(s) { return typeof s === "string" ? s.replace(/\{([\w.]+)\}/g, function (all, k) { return D.live[k] != null ? D.live[k] : all; }) : s; }
+  var LIVE_OK = {};
+  var TOKEN = /\{([\w.]+)\}/g;
+  function raw(v) { return v == null ? "" : typeof v === "string" ? v : (v[lang] != null ? v[lang] : v.ko); }
+  function isLive(s) {
+    var hit = false;
+    String(s).replace(TOKEN, function (all, k) { if (LIVE_OK[k]) hit = true; return all; });
+    return hit;
+  }
+  function liveBadge() { return '<span class="live" title="' + (lang === "en" ? "Fetched live" : "실시간으로 받아온 값") + '">LIVE</span>'; }
   function t(v) {
     var s = v == null ? "" : typeof v === "string" ? v : (v[lang] != null ? v[lang] : v.ko);
     return Array.isArray(s) ? s.map(fill) : fill(s);
@@ -31,7 +40,7 @@
       return "<div><dt>" + esc(t(f.k)) + "</dt><dd>" + v + "</dd></div>";
     }).join("");
     $("glance").innerHTML = D.glance.map(function (g) {
-      return '<li><span class="n">' + esc(fill(g.n)) + '</span><span class="v">' + esc(t(g.v)) + "</span></li>";
+      return '<li><span class="n">' + esc(fill(g.n)) + (isLive(g.n) ? liveBadge() : "") + '</span><span class="v">' + esc(t(g.v)) + "</span></li>";
     }).join("");
   }
 
@@ -71,7 +80,7 @@
           '<p class="links">' + linkRow(c.links) + "</p>" +
         "</header>" +
         '<div class="case-grid">' + media(c) +
-          '<ul class="wins">' + t(c.wins).map(function (w) { return "<li>" + esc(w) + "</li>"; }).join("") + "</ul>" +
+          '<ul class="wins">' + raw(c.wins).map(function (w) { return "<li>" + esc(fill(w)) + (isLive(w) ? liveBadge() : "") + "</li>"; }).join("") + "</ul>" +
         "</div>" +
       "</article>";
     }).join("");
@@ -274,7 +283,7 @@
       } }
   ];
   function fmt(n) { return Number(n).toLocaleString("en-US"); }
-  function applyLive(v) { for (var k in v) D.live[k] = v[k]; renderHead(); renderCases(); }
+  function applyLive(v) { for (var k in v) { D.live[k] = v[k]; LIVE_OK[k] = true; } renderHead(); renderCases(); }
   function loadLive() {
     SOURCES.forEach(function (src) {
       var cached = null, HOUR = 3600e3;

@@ -224,3 +224,9 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .lead-line { max-width: 44rem; color: var(--ink-2); }
 
 .nw { white-space: nowrap; }
+
+/* marks numbers fetched live (GitHub API, beatmania.app summary); fallback values get no mark */
+.live { display: inline-flex; align-items: center; gap: 4px; margin-left: 8px; vertical-align: 0.2em;
+  font: 600 0.6rem/1 var(--mono); letter-spacing: 0.08em; color: var(--muted); }
+.live::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: #00b8b8; }
+.glance-strip .live { vertical-align: 0.9em; }
