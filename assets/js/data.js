@@ -8,8 +8,7 @@ window.PORTFOLIO = {
       "h.work": "주요 작업", "h.polygon": "서버", "h.more": "그 밖의 작업", "h.freelance": "외주", "h.papers": "논문", "h.stack": "기술",
       "lamp.fc": "실사용자와 함께 장기 운영하고 완결", "lamp.exh": "학술 검증과 실증까지", "lamp.hard": "실제 환경에 배포해 쓰이는 중", "lamp.clear": "완성·발표", "lamp.easy": "연습·과제",
       "polygon.more": "polygon.nz에서 자세히 보기", "polygon.status": "외부 감시탑 (stats.polygon.nz)",
-      "px.scale": "배율", "px.bilinear": "쌍선형 보간", "px.nearest": "최근접 보간", "px.pz": "PixelZoom", "px.widths": "도트 폭",
-      "footer": "정적 페이지 · GitHub Pages"
+      "px.scale": "배율", "px.bilinear": "쌍선형 보간", "px.nearest": "최근접 보간", "px.pz": "PixelZoom", "px.widths": "도트 폭"
     },
     en: {
       "nav.work": "Work", "nav.polygon": "Server", "nav.more": "More", "nav.papers": "Papers",
@@ -18,8 +17,7 @@ window.PORTFOLIO = {
       "h.work": "Selected work", "h.polygon": "Server", "h.more": "More work", "h.freelance": "Freelance", "h.papers": "Papers", "h.stack": "Stack",
       "lamp.fc": "long-running with real users, and complete", "lamp.exh": "peer-reviewed and demonstrated", "lamp.hard": "deployed and in use", "lamp.clear": "finished or presented", "lamp.easy": "practice and coursework",
       "polygon.more": "More at polygon.nz", "polygon.status": "External watchtower (stats.polygon.nz)",
-      "px.scale": "scale", "px.bilinear": "bilinear", "px.nearest": "nearest neighbour", "px.pz": "PixelZoom", "px.widths": "dot widths",
-      "footer": "Static page · GitHub Pages"
+      "px.scale": "scale", "px.bilinear": "bilinear", "px.nearest": "nearest neighbour", "px.pz": "PixelZoom", "px.widths": "dot widths"
     }
   },
 
@@ -32,12 +30,15 @@ window.PORTFOLIO = {
   ],
 
   glance: [
-    { n: "282", v: { ko: "beatmania.app 가입자", en: "beatmania.app users" } },
-    { n: "532", v: { ko: "IIDXwidget 다운로드", en: "IIDXwidget downloads" } },
+    { n: "{bm.users}", v: { ko: "beatmania.app 가입자", en: "beatmania.app users" } },
+    { n: "{iidx.dl}", v: { ko: "IIDXwidget 다운로드", en: "IIDXwidget downloads" } },
     { n: "2", v: { ko: "제1저자 논문", en: "first-author papers" } },
     { n: "4", v: { ko: "완수한 외주", en: "freelance projects" } },
     { n: "2021", v: { ko: "홈 서버 운영 시작", en: "running my own server since" } }
   ],
+
+  // Fallback values; tokens like {iidx.dl} in any text are replaced with live numbers once fetched.
+  live: { "iidx.dl": "550", "iidx.rel": "14", "bm.users": "284", "bm.records": "56,838", "bm.visits": "12,257" },
 
   legend: ["fc", "exh", "hard", "clear", "easy"],
 
@@ -52,8 +53,8 @@ window.PORTFOLIO = {
       ],
       media: { type: "image", src: "assets/media/beatmania-status-365.webp", w: 1485, h: 780, alt: { ko: "beatmania.app 서비스 현황, 지난 365일 방문 그래프", en: "beatmania.app status page with the past-365-day visit chart" } },
       wins: {
-        ko: ["가입자 282명 · 플레이 기록 55,788건 · 최근 1년 방문 12,172회", "서열표 응답 1.2초 → 54ms (N+1 쿼리 제거)", "Reflux와 연동해 게임 기록을 실시간으로 동기화하는 데스크톱 앱 개발·배포", "mod_wsgi → Docker·gunicorn 무중단 이전, Cloudflare Tunnel과 self-hosted CI/CD"],
-        en: ["282 users · 55,788 play records · 12,172 visits in the past year", "Table page 1.2 s → 54 ms (removed an N+1 query)", "Built and shipped a desktop app that syncs game records live via Reflux", "Moved from mod_wsgi to Docker + gunicorn without downtime; Cloudflare Tunnel and self-hosted CI/CD"]
+        ko: ["가입자 {bm.users}명 · 플레이 기록 {bm.records}건 · 최근 1년 방문 {bm.visits}회", "서열표 응답 1.2초 → 54ms (N+1 쿼리 제거)", "Reflux와 연동해 게임 기록을 실시간으로 동기화하는 데스크톱 앱 개발·배포", "mod_wsgi → Docker·gunicorn 무중단 이전, Cloudflare Tunnel과 self-hosted CI/CD"],
+        en: ["{bm.users} users · {bm.records} play records · {bm.visits} visits in the past year", "Table page 1.2 s → 54 ms (removed an N+1 query)", "Built and shipped a desktop app that syncs game records live via Reflux", "Moved from mod_wsgi to Docker + gunicorn without downtime; Cloudflare Tunnel and self-hosted CI/CD"]
       }
     },
     {
@@ -79,8 +80,8 @@ window.PORTFOLIO = {
       ],
       media: { type: "video", items: [ { src: "assets/media/iidxwidget-play.mp4", poster: "assets/media/iidxwidget-play.jpg" } ] },
       wins: {
-        ko: ["릴리스 14회 · 설치 파일 다운로드 532회 · 외부 기여 PR 3건 병합", "v3.0.0: 백신 오탐 2 → 0, npm audit 경고 32 → 0, 테스트 0 → 36", "beatmania.app과 연동해 일일 타건 기록·랭킹 제공"],
-        en: ["14 releases · 532 installer downloads · 3 merged community PRs", "v3.0.0: antivirus false positives 2 → 0, npm audit warnings 32 → 0, tests 0 → 36", "Connected to beatmania.app for daily keystroke logs and rankings"]
+        ko: ["릴리스 {iidx.rel}회 · 설치 파일 다운로드 {iidx.dl}회 · 외부 기여 PR 3건 병합", "v3.0.0: 백신 오탐 2 → 0, npm audit 경고 32 → 0, 테스트 0 → 36", "beatmania.app과 연동해 일일 타건 기록·랭킹 제공"],
+        en: ["{iidx.rel} releases · {iidx.dl} installer downloads · 3 merged community PRs", "v3.0.0: antivirus false positives 2 → 0, npm audit warnings 32 → 0, tests 0 → 36", "Connected to beatmania.app for daily keystroke logs and rankings"]
       }
     }
   ],

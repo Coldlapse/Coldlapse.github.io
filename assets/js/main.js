@@ -6,7 +6,11 @@
   var $ = function (id) { return document.getElementById(id); };
 
   function save(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
-  function t(v) { return v == null ? "" : typeof v === "string" ? v : (v[lang] != null ? v[lang] : v.ko); }
+  function fill(s) { return typeof s === "string" ? s.replace(/\{([\w.]+)\}/g, function (all, k) { return D.live[k] != null ? D.live[k] : all; }) : s; }
+  function t(v) {
+    var s = v == null ? "" : typeof v === "string" ? v : (v[lang] != null ? v[lang] : v.ko);
+    return Array.isArray(s) ? s.map(fill) : fill(s);
+  }
   function ui(k) { return D.ui[lang][k] || D.ui.ko[k] || ""; }
   function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]; }); }
     function linkRow(links) {
@@ -27,7 +31,7 @@
       return "<div><dt>" + esc(t(f.k)) + "</dt><dd>" + v + "</dd></div>";
     }).join("");
     $("glance").innerHTML = D.glance.map(function (g) {
-      return '<li><span class="n">' + esc(g.n) + '</span><span class="v">' + esc(t(g.v)) + "</span></li>";
+      return '<li><span class="n">' + esc(fill(g.n)) + '</span><span class="v">' + esc(t(g.v)) + "</span></li>";
     }).join("");
   }
 
@@ -249,6 +253,46 @@
     loop();
   })();
 
+  /* ---------- live numbers ---------- */
+  // Each source is cached separately for an hour; a failed request keeps the fallback in data.js.
+  //  - IIDXwidget: installer downloads summed like the IIDXwidget landing page does
+  //    (update-check files such as latest.yml and .blockmap are excluded). The hour of caching
+  //    keeps us far below GitHub's 60 requests/hour limit for anonymous clients.
+  //  - beatmania.app: /status/summary.json, which allows this origin only (CORS).
+  var SOURCES = [
+    { key: "live-iidx-v1", url: "https://api.github.com/repos/Coldlapse/IIDXwidget/releases?per_page=100",
+      read: function (rels) {
+        var n = rels.reduce(function (sum, rel) {
+          return sum + (rel.assets || []).filter(function (a) { return /\.(exe|AppImage)$/i.test(a.name); })
+            .reduce(function (s, a) { return s + (a.download_count || 0); }, 0);
+        }, 0);
+        return { "iidx.dl": fmt(n), "iidx.rel": String(rels.filter(function (r) { return !r.draft; }).length) };
+      } },
+    { key: "live-bm-v1", url: "https://beatmania.app/status/summary.json",
+      read: function (s) {
+        return { "bm.users": fmt(s.users), "bm.records": fmt(s.records), "bm.visits": fmt(s.visits365) };
+      } }
+  ];
+  function fmt(n) { return Number(n).toLocaleString("en-US"); }
+  function applyLive(v) { for (var k in v) D.live[k] = v[k]; renderHead(); renderCases(); }
+  function loadLive() {
+    SOURCES.forEach(function (src) {
+      var cached = null, HOUR = 3600e3;
+      try { cached = JSON.parse(localStorage.getItem(src.key) || "null"); } catch (e) {}
+      if (cached) applyLive(cached.v);
+      if (cached && cached.at > Date.now() - HOUR) return;
+      fetch(src.url)
+        .then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+        .then(function (json) {
+          var v = src.read(json);
+          try { localStorage.setItem(src.key, JSON.stringify({ at: Date.now(), v: v })); } catch (e) {}
+          applyLive(v);
+        })
+        .catch(function () { /* keep the fallback or cached numbers */ });
+    });
+  }
+
   paintTheme();
   renderAll();
+  loadLive();
 })();
