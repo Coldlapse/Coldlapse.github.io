@@ -213,6 +213,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .poly-link { margin-top: 14px; font-weight: 600; }
 .stack-line { margin-top: 14px; font-size: 0.86rem; color: var(--muted); }
 
+section > .wrap > h2 + .songs, section > .wrap > h2 + .plain { margin-top: -22px; }
 .song { display: grid; grid-template-columns: 6px minmax(0, 14rem) minmax(0, 1fr) 5.5rem minmax(0, 11rem); gap: 18px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule-soft); }
 .song .bar { align-self: stretch; }
 .song .title { font-weight: 600; }
