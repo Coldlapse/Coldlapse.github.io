@@ -123,6 +123,12 @@ figure.shot figcaption { margin-top: 10px; font-size: 0.84rem; color: var(--mute
 @media (max-width: 760px) { .shot-pair { grid-template-columns: 1fr; } }
 .video-frame { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; padding: clamp(12px, 3vw, 28px); }
 figure.shot .video-frame video { width: min(100%, 440px); border-radius: 4px; }
+.lead-shot { margin: 0 0 clamp(24px, 4vw, 40px); }
+.lead-shot img { display: block; width: 100%; height: auto; border-radius: 6px; background: var(--figure); }
+.chart-frame { padding: clamp(10px, 2vw, 18px) clamp(6px, 1.5vw, 14px) 4px; }
+.weekly { display: block; width: 100%; height: auto; font-family: var(--mono); }
+.weekly .ax { font-size: 10px; fill: #8290ad; }
+.weekly .lb { font-size: 11px; font-weight: 600; fill: #e2e8f3; font-family: var(--sans); }
 
 
 

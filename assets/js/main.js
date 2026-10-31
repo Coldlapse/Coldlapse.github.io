@@ -52,6 +52,38 @@
     }).join("") + "</ul>";
   }
 
+  // Bar per week, dashed line per release, solid line per period average. Drawn on the dark figure frame in both themes.
+  function weeklyChart(m) {
+    var W = 720, H = 300, l = 36, r = 104, top = 34, b = 30, pw = W - l - r, ph = H - top - b;
+    var DAY = 864e5, t0 = Date.parse(m.start), n = m.weeks.length * 7;
+    var max = Math.ceil(Math.max.apply(null, m.weeks) / 50) * 50;
+    var y = function (v) { return top + ph - (v / max) * ph; };
+    var xd = function (d) { return l + Math.min(Math.max((Date.parse(d) - t0) / DAY, 0), n) / n * pw; };
+    var bw = pw / m.weeks.length, out = [];
+    for (var v = 0; v <= max; v += 50) {
+      out.push('<line x1="' + l + '" x2="' + (l + pw) + '" y1="' + y(v) + '" y2="' + y(v) + '" stroke="#1f2a45"/><text x="' + (l - 6) + '" y="' + (y(v) + 4) + '" text-anchor="end" class="ax">' + v + "</text>");
+    }
+    var last = "";
+    m.weeks.forEach(function (w, i) {
+      var start = new Date(t0 + i * 7 * DAY), mid = new Date(t0 + (i * 7 + 3) * DAY).toISOString().slice(0, 10);
+      var fill = mid >= m.marks[1].d ? "#9fe7ff" : mid >= m.marks[0].d ? "#5d8fd6" : "#33456f";
+      out.push('<rect x="' + (l + i * bw + 1) + '" y="' + y(w) + '" width="' + (bw - 2) + '" height="' + (y(0) - y(w)) + '" rx="1.5" fill="' + fill + '"/>');
+      var mo = start.toISOString().slice(2, 7).replace("-", ".");
+      if (last && mo !== last) out.push('<text x="' + (l + i * bw) + '" y="' + (H - 10) + '" class="ax">' + mo + "</text>");
+      last = mo;
+    });
+    m.avgs.forEach(function (a) {
+      out.push('<line x1="' + xd(a.from) + '" x2="' + xd(a.to) + '" y1="' + y(a.v) + '" y2="' + y(a.v) + '" stroke="#e2e8f3" stroke-width="1.4"/>' +
+        '<text x="' + (l + pw + 8) + '" y="' + (y(a.v) + 4) + '" class="lb">' + esc(t(a.t)) + " " + a.v + "</text>");
+    });
+    m.marks.forEach(function (k, i) {
+      var X = xd(k.d), right = i === m.marks.length - 1;
+      out.push('<line x1="' + X + '" x2="' + X + '" y1="' + (top - 8) + '" y2="' + y(0) + '" stroke="#e2e8f3" stroke-dasharray="3 3"/>' +
+        '<text x="' + (right ? X + 5 : X - 5) + '" y="' + (top - 14) + '" text-anchor="' + (right ? "start" : "end") + '" class="lb">' + esc(t(k.t)) + "</text>");
+    });
+    return '<svg class="weekly" viewBox="0 0 ' + W + " " + H + '" role="img" aria-label="' + esc(t(m.alt)) + '">' + out.join("") + "</svg>";
+  }
+
   function media(c) {
     var m = c.media;
     if (m.type === "pixel") return '<figure class="shot"><div class="pxdemo" id="pxdemo"></div></figure>';
@@ -63,6 +95,7 @@
         return '<div class="frame"><img src="' + i.src + '" width="' + i.w + '" height="' + i.h + '" alt="' + esc(t(i.alt)) + '" loading="lazy"></div>';
       }).join("") + "</div></figure>";
     }
+    if (m.type === "weekly") return '<figure class="shot"><div class="frame chart-frame">' + weeklyChart(m) + "</div><figcaption>" + esc(t(m.caption)) + "</figcaption></figure>";
     if (m.type === "video") {
       return '<figure class="shot"><div class="frame video-frame">' + m.items.map(function (v) {
         return '<video src="' + v.src + '" poster="' + v.poster + '" muted loop playsinline autoplay preload="metadata" width="520" height="380"></video>';
@@ -79,6 +112,7 @@
           '<p class="one">' + esc(t(c.one)) + "</p>" +
           '<p class="links">' + linkRow(c.links) + "</p>" +
         "</header>" +
+        (c.lead ? '<figure class="lead-shot"><img src="' + c.lead.src + '" width="' + c.lead.w + '" height="' + c.lead.h + '" alt="' + esc(t(c.lead.alt)) + '" loading="lazy"></figure>' : "") +
         '<div class="case-grid">' + media(c) +
           '<ul class="wins">' + raw(c.wins).map(function (w) { return "<li>" + esc(fill(w)) + (isLive(w) ? liveBadge() : "") + "</li>"; }).join("") + "</ul>" +
         "</div>" +

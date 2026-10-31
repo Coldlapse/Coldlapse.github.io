@@ -51,10 +51,21 @@ window.PORTFOLIO = {
         { t: "GitHub", u: "https://github.com/Coldlapse/beatmania.app" },
         { t: "Synchronizer", u: "https://github.com/Coldlapse/beatmania.app-synchronizer" }
       ],
-      media: { type: "image", src: "assets/media/beatmania-status-365.webp", w: 1485, h: 780, alt: { ko: "beatmania.app 서비스 현황, 지난 365일 방문 그래프", en: "beatmania.app status page with the past-365-day visit chart" } },
+      lead: { src: "assets/media/beatmania-top.webp", w: 1620, h: 465, alt: { ko: "beatmania.app 사용자 페이지 상단(다크 모드). 메뉴, 프로필과 BPI·CPI, 서열표 선택 버튼", en: "Top of a beatmania.app player page in dark mode: menu, profile with BPI and CPI, and the table picker" } },
+      // Weekly averages of daily visits from beatmania.app/status/views.json, snapshot of 2025.10.27 – 2026.10.26.
+      media: { type: "weekly", start: "2025-10-27",
+        weeks: [19.3, 18.3, 19.7, 21.6, 18, 25.9, 23.3, 25.4, 23.4, 27.4, 32.1, 22.3, 23.6, 26.6, 25.4, 32.3, 26.7, 24.4, 55.4, 39.9, 36, 39.3, 43.1, 36, 37.7, 30, 44.4, 27.9, 25.4, 30.6, 34.6, 43, 49.7, 33, 35.9, 37, 32.4, 30.3, 25.1, 27.6, 35.9, 25.7, 26.7, 34.7, 69.9, 64.6, 58.4, 54.6, 103.4, 127.3, 129.7, 168.6],
+        marks: [{ d: "2026-09-02", t: { ko: "9.02 개편", en: "Sep 2 redesign" } }, { d: "2026-09-26", t: { ko: "9.26 동기화 앱", en: "Sep 26 sync app" } }],
+        avgs: [
+          { from: "2025-10-27", to: "2026-09-02", v: 30.8, t: { ko: "개편 전", en: "Before" } },
+          { from: "2026-09-02", to: "2026-09-26", v: 59.8, t: { ko: "개편 후", en: "Redesign" } },
+          { from: "2026-09-26", to: "2026-10-27", v: 136.2, t: { ko: "앱 출시 후", en: "Sync app" } }
+        ],
+        alt: { ko: "beatmania.app 주별 일평균 방문 막대그래프. 개편 전 30.8회, 개편 후 59.8회, 동기화 앱 출시 후 136.2회", en: "Weekly bar chart of beatmania.app daily visits: 30.8 before the redesign, 59.8 after it, 136.2 after the sync app" },
+        caption: { ko: "7일 묶음별 일평균 방문(서열표 페이지의 고유 세션). 가로선은 구간 평균. 2025.10.27 ~ 2026.10.26", en: "Average daily visits per week (unique sessions on the table pages). Horizontal lines are period averages. Oct 27, 2025 – Oct 26, 2026" } },
       wins: {
-        ko: ["가입자 {bm.users}명 · 플레이 기록 {bm.records}건 · 최근 1년 방문 {bm.visits}회", "서열표 응답 1.2초 → 54ms (N+1 쿼리 제거)", "Reflux와 연동해 게임 기록을 실시간으로 동기화하는 데스크톱 앱 개발·배포", "mod_wsgi → Docker·gunicorn 무중단 이전, Cloudflare Tunnel과 self-hosted CI/CD"],
-        en: ["{bm.users} users · {bm.records} play records · {bm.visits} visits in the past year", "Table page 1.2 s → 54 ms (removed an N+1 query)", "Built and shipped a desktop app that syncs game records live via Reflux", "Moved from mod_wsgi to Docker + gunicorn without downtime; Cloudflare Tunnel and self-hosted CI/CD"]
+        ko: ["가입자 {bm.users}명 · 플레이 기록 {bm.records}건 · 최근 1년 방문 {bm.visits}회", "2026.09 화면 개편과 기록 동기화 앱 출시 뒤 일평균 방문 30.8 → 136.2회(4.4배), 손으로 입력해 4년간 쌓인 기록 3.8만 건이 두 달이 안 돼 6.6만 건으로", "서열표 응답 1.2초 → 54ms (N+1 쿼리 제거)", "Reflux와 연동해 게임 기록을 실시간으로 동기화하는 데스크톱 앱 개발·배포", "mod_wsgi → Docker·gunicorn 무중단 이전, Cloudflare Tunnel과 self-hosted CI/CD"],
+        en: ["{bm.users} users · {bm.records} play records · {bm.visits} visits in the past year", "After the Sep 2026 redesign and the record-sync app launch, daily visits rose from 30.8 to 136.2 (4.4×), and records that took four years of manual entry to reach 38K grew to 66K in under two months", "Table page 1.2 s → 54 ms (removed an N+1 query)", "Built and shipped a desktop app that syncs game records live via Reflux", "Moved from mod_wsgi to Docker + gunicorn without downtime; Cloudflare Tunnel and self-hosted CI/CD"]
       }
     },
     {
