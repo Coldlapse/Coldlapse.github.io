@@ -146,7 +146,6 @@ figure.shot .video-frame video { width: min(100%, 440px); border-radius: 4px; }
 
 /* ---- lists ---- */
 .plain li { padding: 12px 0; border-bottom: 1px solid var(--rule-soft); display: grid; grid-template-columns: 7rem minmax(0, 1fr); gap: 18px; }
-.plain li:first-child { border-top: 1px solid var(--rule); }
 .plain .k { font: 400 0.82rem/1.9 var(--mono); color: var(--muted); }
 .plain .v { color: var(--ink-2); }
 .plain .v b { color: var(--ink); font-weight: 600; }
@@ -208,7 +207,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .poly-link { margin-top: 14px; font-weight: 600; }
 .stack-line { margin-top: 14px; font-size: 0.86rem; color: var(--muted); }
 
-.songs { border-top: 1px solid var(--rule); }
 .song { display: grid; grid-template-columns: 6px minmax(0, 14rem) minmax(0, 1fr) 5.5rem minmax(0, 11rem); gap: 18px; align-items: baseline; padding: 14px 0; border-bottom: 1px solid var(--rule-soft); }
 .song .bar { align-self: stretch; }
 .song .title { font-weight: 600; }
