@@ -38,7 +38,7 @@ window.PORTFOLIO = {
   ],
 
   // Fallback values; tokens like {iidx.dl} in any text are replaced with live numbers once fetched.
-  live: { "iidx.dl": "550", "iidx.rel": "14", "bm.users": "284", "bm.records": "56,838", "bm.visits": "12,257" },
+  live: { "iidx.dl": "619", "iidx.rel": "18", "bm.users": "295", "bm.records": "66,411", "bm.visits": "15,217" },
 
   legend: ["fc", "exh", "hard", "clear", "easy"],
 
@@ -107,6 +107,9 @@ window.PORTFOLIO = {
     { id: "hrilab", title: { ko: "HRILab 홈페이지 서버 이전", en: "HRILab website migration" }, lamp: "hard", year: "2026",
       win: { ko: "NAS에서 랙 서버로 이전, HTTPS 전환 (hri.dongguk.edu)", en: "Moved from a NAS to a rack server and switched to HTTPS (hri.dongguk.edu)" },
       links: [{ t: "hri.dongguk.edu", u: "http://hri.dongguk.edu/" }] },
+    { id: "mdv", title: "MDV", lamp: "clear", year: "2026",
+      win: { ko: "Windows 11 Markdown 뷰어 오픈소스 기여: 한국어·영어 UI 번역, EUC-KR 등 비 UTF-8 문서 읽기 (PR 3건 병합, 2건 리뷰 중)", en: "Open-source contributions to a Windows 11 Markdown viewer: Korean and English UI localization, reading non-UTF-8 files such as EUC-KR (3 PRs merged, 2 in review)" },
+      links: [{ t: "GitHub", u: "https://github.com/kajiyajp/MDV" }, { t: { ko: "내 PR", en: "My PRs" }, u: "https://github.com/kajiyajp/MDV/pulls?q=is%3Apr+author%3AColdlapse" }] },
     { id: "pill", title: { ko: "알약 배경 제거기", en: "Pill background remover" }, lamp: "clear", year: "2025",
       win: { ko: "분할 정확도 IoU 0.32 → 0.81, 한국지능시스템학회 발표", en: "Segmentation IoU 0.32 → 0.81, presented at KIIS" },
       links: [{ t: "GitHub", u: "https://github.com/Coldlapse/pill-bg-remover" }] },
